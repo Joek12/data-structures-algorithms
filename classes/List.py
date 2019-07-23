@@ -3,77 +3,56 @@
         (i.e. implement linked list in python)
 """
 
-class Node:
-
-    def __init__(self,value:int, parent=None, child=None):
-        self.parent = parent
-        self.child = child
-        self.value = value
-
-    def __eq__(self, other):
-        return self.value == other.value
-
-    def __iter__(self):
-
-        yield self.value
-
-        if self.child:
-            yield from self.child.__iter__()
-
-
-    def set_child(self, value):
-        self.child = Node(value, parent=self)
-
-    def set_parent(self, value):
-        self.parent = Node(value, child=self)
+from Node import Node
 
 class List:
 
     def __init__(self):
         self.count = 0
-        self.root = None
-        self.foot = None
+        self.head = None
+        self.tail = None
 
     def __iter__(self):
-        if not self.root:
+        if not self.head:
             return []
 
-        yield from self.root.__iter__()
+        yield from self.head.__iter__()
 
     def __len__(self):
         return self.count
 
 
     def emplace_back(self, value):
-        if not self.root:
-            self.root = Node(value)
-            self.foot = self.root
+        if not self.head:
+            self.head = Node(value)
+            self.tail = self.head
             self.count = 1
 
         else:
-            self.foot.set_child(value)
-            self.foot = self.foot.child
+            self.tail.set_child(value)
+            self.tail = self.tail.child
             self.count += 1
 
     def emplace_front(self, value):
-        if not self.root:
-            self.root = Node(value)
-            self.foot = self.root
+        if not self.head:
+            self.head = Node(value)
+            self.tail = self.head
             self.count = 1
 
 
         else:
-            self.root.set_parent(value)
-            self.root = self.root.parent
+            self.head.set_parent(value)
+            self.head = self.head.parent
             self.count += 1
 
     def insert(self, index, value):
-        pointer = self.root
+        # inserting at specified index
+        pointer = self.head
         assert index < self.count
         for i in range(index):
             pointer = pointer.child
 
-        if pointer != self.root:
+        if pointer != self.head:
             temp = pointer.parent
             temp.set_child(value)
             temp.child.child = pointer
@@ -83,8 +62,17 @@ class List:
         else:
             self.emplace_front(value)
 
+    def insert(self, value):
+        # inserting at head
+        x = Node(value)
+        x.child = self.head
+        if self.head:
+            self.head.parent = x
+        self.head = x
+        x.parent = None
+
     def swap(self, index, value):
-        pointer = self.root
+        pointer = self.head
         assert index < self.count
         for i in range(index):
             pointer = pointer.child
@@ -92,12 +80,15 @@ class List:
         pointer.value = value
 
     def delete(self, index):
-        pointer = self.root
+        # deleting at specified index
+        # NOT O(1)
+        # worst case: O(n)
+        pointer = self.head
         assert index < self.count
         for i in range(index):
             pointer = pointer.child
 
-        if pointer != self.root:
+        if pointer != self.head:
 
             temp = pointer.parent
 
@@ -108,17 +99,24 @@ class List:
                 temp.child = None
 
         else:
-            self.root = pointer.child
+            self.head = pointer.child
 
         self.count -= 1
 
     def at(self, index):
-        pointer = self.root
+        pointer = self.head
         assert index < self.count
         for i in range(index):
             pointer = pointer.child
 
         return pointer.value
 
+    def search(self, value):
+        x = self.head
+        # while x != NIL and x.key != k
+        while x and x.value != value:
+            x = x.child
+
+        return x
 
 
