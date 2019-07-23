@@ -4,6 +4,7 @@
     simple (albeit naive) implementation in Python
 """
 from Node import Node
+from Container import Container
 from Common_Exceptions import Overflow, Underflow
 
 
@@ -17,51 +18,49 @@ class StackOverflow(Overflow):
     pass
 
 
-class Stack:
+class Stack(Container):
+    """
+        as we are simulating static arrays in Python, will alter the
+        implementation of top by making it a pointer to the top element
+        as opposed to the index of the top element in the base array
+        will use size to hold the number of entries instead
+        self.root = None
+    """
 
     def __init__(self, size):
-        # as we are simulating static arrays in Python, will alter the
-        # implementation of top by making it a pointer to the top element
-        # as opposed to the index of the top element in the base array
-        # will use size to hold the number of entries instead
-        # self.root = None
-        self.top = None
-        self.size = 0
+        super().__init__()
         self.max = size
-
-    def __len__(self):
-        return self.size
 
     def push(self, value):
         if self.max == self.size:
             raise StackOverflow()
 
-        if not self.top:
-            self.top = Node(value)
+        if not self.tail:
+            self.tail = Node(value)
 
         else:
-            self.top.set_child(value)
+            self.tail.set_child(value)
 
         self.size += 1
 
     def pop(self):
-        return_value = self.top.value
+        return_value = self.tail.value
 
-        if not self.top:
+        if not self.tail:
             assert self.size == 0
             raise StackUnderflow()
 
         elif self.size == 1:
-            self.top = None
+            self.tail = None
 
         else:
-            self.top = self.top.parent
-            self.top.child = None
+            self.tail = self.tail.parent
+            self.tail.child = None
 
         self.size -= 1
 
         return return_value
 
     def empty(self):
-        return bool(self.top)
+        return bool(self.tail)
 

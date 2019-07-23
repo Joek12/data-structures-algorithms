@@ -6,6 +6,7 @@
 """
 from Node import Node
 from Common_Exceptions import Overflow, Underflow
+from Container import Container
 
 
 class QueueOverflow(Overflow):
@@ -18,19 +19,14 @@ class QueueUnderflow(Underflow):
     pass
 
 
-class Queue:
+class Queue(Container):
 
     def __init__(self, size):
-        self.tail = None
-        self.head = None
-        self.length = None
+        super().__init__()
         self.max = size
 
-    def __len__(self):
-        return self.length
-
     def enqueue(self, value):
-        if self.length == self.max:
+        if self.size == self.max:
             raise QueueOverflow()
 
         if not self.head:
@@ -41,7 +37,7 @@ class Queue:
             self.tail.set_child(value)
             self.tail = self.tail.child
 
-        self.length += 1
+        self.size += 1
 
     def dequeue(self):
 
@@ -50,7 +46,7 @@ class Queue:
 
         value = self.head.value
 
-        if self.length == 1:
+        if self.size == 1:
             self.head = None
             self.tail = None
 

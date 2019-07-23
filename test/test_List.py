@@ -7,13 +7,13 @@ from List import List
 
 def main():
     myl = List()
-    myl.emplace_back(1)
+    myl.push_back(1)
 
-    myl.emplace_back(2)
+    myl.push_back(2)
 
     myl.insert(0, 3)
     myl.insert(1, 4)
-    myl.emplace_front(5)
+    myl.push_front(5)
     myl.insert(2, 6)
     myl.delete(2)
 

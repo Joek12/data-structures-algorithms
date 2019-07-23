@@ -4,51 +4,36 @@
 """
 
 from Node import Node
+from Container import Container
 
-class List:
+class List(Container):
 
-    def __init__(self):
-        self.count = 0
-        self.head = None
-        self.tail = None
-
-    def __iter__(self):
-        if not self.head:
-            return []
-
-        yield from self.head.__iter__()
-
-    def __len__(self):
-        return self.count
-
-
-    def emplace_back(self, value):
+    def push_back(self, value):
         if not self.head:
             self.head = Node(value)
             self.tail = self.head
-            self.count = 1
+            self.size = 1
 
         else:
             self.tail.set_child(value)
             self.tail = self.tail.child
-            self.count += 1
+            self.size += 1
 
-    def emplace_front(self, value):
+    def push_front(self, value):
         if not self.head:
             self.head = Node(value)
             self.tail = self.head
-            self.count = 1
-
+            self.size = 1
 
         else:
             self.head.set_parent(value)
             self.head = self.head.parent
-            self.count += 1
+            self.size += 1
 
     def insert(self, index, value):
         # inserting at specified index
         pointer = self.head
-        assert index < self.count
+        assert index < self.size
         for i in range(index):
             pointer = pointer.child
 
@@ -57,12 +42,12 @@ class List:
             temp.set_child(value)
             temp.child.child = pointer
             pointer.parent = temp.child
-            self.count += 1
+            self.size += 1
 
         else:
-            self.emplace_front(value)
+            self.push_front(value)
 
-    def insert(self, value):
+    def insert_head(self, value):
         # inserting at head
         x = Node(value)
         x.child = self.head
@@ -73,7 +58,7 @@ class List:
 
     def swap(self, index, value):
         pointer = self.head
-        assert index < self.count
+        assert index < self.size
         for i in range(index):
             pointer = pointer.child
 
@@ -84,7 +69,7 @@ class List:
         # NOT O(1)
         # worst case: O(n)
         pointer = self.head
-        assert index < self.count
+        assert index < self.size
         for i in range(index):
             pointer = pointer.child
 
@@ -101,11 +86,11 @@ class List:
         else:
             self.head = pointer.child
 
-        self.count -= 1
+        self.size -= 1
 
     def at(self, index):
         pointer = self.head
-        assert index < self.count
+        assert index < self.size
         for i in range(index):
             pointer = pointer.child
 
