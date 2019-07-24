@@ -1,4 +1,4 @@
-from classes.stack import Stack, StackOverflow, StackUnderflow
+from data_structures.stack import Stack, StackOverflow, StackUnderflow
 
 
 def test_stack():

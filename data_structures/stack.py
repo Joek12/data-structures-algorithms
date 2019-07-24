@@ -3,9 +3,9 @@
 
     simple (albeit naive) implementation in Python
 """
-from classes.Node import Node
-from classes.Container import Container
-from classes.Common_Exceptions import Overflow, Underflow
+from data_structures.Node import Node
+from data_structures.Container import Container
+from data_structures.Common_Exceptions import Overflow, Underflow
 
 
 class StackUnderflow(Underflow):

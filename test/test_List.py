@@ -1,4 +1,4 @@
-from classes.List import List
+from data_structures.List import List
 
 
 def test_list():
