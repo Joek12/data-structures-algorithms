@@ -1,11 +1,7 @@
-import sys
-import os
+from classes.List import List
 
-sys.path.append(os.getcwd().split('data-structures')[0] + "data-structures/classes")
 
-from List import List
-
-def main():
+def test_list():
     myl = List()
     myl.push_back(1)
 
@@ -28,5 +24,6 @@ def main():
     myl.swap(3, 7)
     assert list(myl) == [5, 3, 4, 7, 2]
 
+
 if __name__ == '__main__':
-    main()
+    test_list()

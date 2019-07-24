@@ -3,12 +3,14 @@
         (i.e. implement linked list in python)
 """
 
-from Node import Node
-from Container import Container
+from classes.Node import Node
+from classes.Container import Container
+
 
 class List(Container):
 
     def push_back(self, value):
+        """"""
         if not self.head:
             self.head = Node(value)
             self.tail = self.head
@@ -20,6 +22,7 @@ class List(Container):
             self.size += 1
 
     def push_front(self, value):
+        """"""
         if not self.head:
             self.head = Node(value)
             self.tail = self.head
@@ -31,6 +34,7 @@ class List(Container):
             self.size += 1
 
     def insert(self, index, value):
+        """"""
         # inserting at specified index
         pointer = self.head
         assert index < self.size
@@ -48,6 +52,7 @@ class List(Container):
             self.push_front(value)
 
     def insert_head(self, value):
+        """"""
         # inserting at head
         x = Node(value)
         x.child = self.head
@@ -57,6 +62,7 @@ class List(Container):
         x.parent = None
 
     def swap(self, index, value):
+        """"""
         pointer = self.head
         assert index < self.size
         for i in range(index):
@@ -65,6 +71,7 @@ class List(Container):
         pointer.value = value
 
     def delete(self, index):
+        """"""
         # deleting at specified index
         # NOT O(1)
         # worst case: O(n)
@@ -89,6 +96,7 @@ class List(Container):
         self.size -= 1
 
     def at(self, index):
+        """"""
         pointer = self.head
         assert index < self.size
         for i in range(index):
@@ -97,6 +105,7 @@ class List(Container):
         return pointer.value
 
     def search(self, value):
+        """"""
         x = self.head
         # while x != NIL and x.key != k
         while x and x.value != value:

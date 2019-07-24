@@ -19,7 +19,7 @@ class QueueUnderflow(Underflow):
     pass
 
 
-class Queue(Container):
+class QueueCustom(Container):
 
     def __init__(self, size):
         super().__init__()

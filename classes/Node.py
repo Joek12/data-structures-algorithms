@@ -31,3 +31,21 @@ class Node:
     def set_parent(self, value):
         self.parent = Node(value, child=self)
 
+
+class TreeNode(Node):
+
+    def __init__(self):
+        super().__init__()
+        self.left = None
+        self.right = None
+
+    def __iter__(self):
+
+        if self.left:
+            yield from self.left.__iter__()
+
+        yield self.value
+
+        if self.right:
+            yield from self.right.__iter__()
+
