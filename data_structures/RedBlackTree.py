@@ -1,5 +1,5 @@
 from Node import TreeNode
-from Container import Container
+from data_structures.BinarySearchTree import BinarySearchTree
 
 
 red = "RED"
@@ -13,9 +13,11 @@ class RBNode(TreeNode):
         self.color = color
 
 
-class RedBlackTree(Container):
+class RedBlackTree(BinarySearchTree):
 
-    t_nil = RBNode(black)
+    def __init__(self):
+        super().__init__()
+        self.t_nil = RBNode(black)
 
     def left_rotate(self, x:RBNode):
         assert x
@@ -131,6 +133,106 @@ class RedBlackTree(Container):
 
         v.parent = u.parent
 
+    def rb_delete(self, z:RBNode):
+        y = z
+        y_oc = y.color
+        if z.left == self.t_nil:
+            x = z.right
+            self.rb_transplant(z, z.right)
 
+        elif z.right == self.t_nil:
+            x = z.left
+            self.rb_transplant(z, z.left)
+
+        else:
+            y = self.tree_minimum(z.right)
+            y_oc = y.color
+            x = y.right
+
+            if y.parent == z:
+                x.parent = y
+
+            else:
+                self.rb_transplant(y, y.right)
+                y.right = z.right
+                y.right.p = y
+
+            self.rb_transplant(z, y)
+            y.left = z.left
+            y.left.parent = y
+            y.color = z.color
+
+        if y_oc == black:
+            self.rb_delete_fixup(x)
+
+
+    def rb_delete_fixup(self, x):
+        while x != self.head and x.color == black:
+            if x == x.parent.left:
+                w = x.parent.right
+                if w.color == red:
+                    # case 1
+                    w.color = black
+                    x.parent.color = red
+
+                    self.left_rotate(x.parent)
+                    w = x.parent.right
+
+                if w.left.color == black and w.right.color == black:
+                    # case 2
+                    w.color = red
+                    x = x.parent
+
+                elif w.right.color == black:
+                    # case 3
+                    w.left.color = black
+                    w.color = red
+                    self.right_rotate(w)
+                    w = x.parent.right
+
+                else:
+                    # case 4
+                    w.color = x.parent.color
+                    x.parent.color = black
+                    w.right.color = black
+
+                    self.left_rotate(x.parent)
+                    x = self.head
+
+            else:
+
+                w = x.parent.left
+                if w.color == red:
+                    # case 1
+                    w.color = black
+                    x.parent.color = red
+
+                    self.right_rotate(x.parent)
+                    w = x.parent.left
+
+                if w.right.color == black and w.left.color == black:
+                    # case 2
+                    w.color = red
+                    x = x.parent
+
+                elif w.left.color == black:
+                    # case 3
+                    w.right.color = black
+                    w.color = red
+
+                    self.left_rotate(w)
+
+                    w = x.parent.left
+
+                else:
+                    # case 4
+                    w.color = x.parent.color
+                    x.parent.color = black
+                    w.left.color = black
+
+                    self.right_rotate(x.parent)
+                    x = self.head
+
+        x.color = black
 
 
