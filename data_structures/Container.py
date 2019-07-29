@@ -15,4 +15,7 @@ class Container:
 
         yield from self.head.__iter__()
 
+    def __repr__(self):
+        return str(list(self.__iter__()))
+
 

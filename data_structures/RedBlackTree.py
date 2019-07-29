@@ -8,8 +8,8 @@ black = "BLACK"
 
 class RBNode(TreeNode):
 
-    def __init__(self, color = black):
-        super().__init__()
+    def __init__(self, color=black, value=None, parent=None, child=None, set_pos=None, left=None, right=None):
+        super().__init__(value=value, parent=parent, child=child, set_pos=set_pos, left=left, right=right)
         self.color = color
 
 
@@ -18,6 +18,7 @@ class RedBlackTree(BinarySearchTree):
     def __init__(self):
         super().__init__()
         self.t_nil = RBNode(black)
+        self.head = RBNode(black)
 
     def left_rotate(self, x:RBNode):
         assert x
@@ -58,7 +59,11 @@ class RedBlackTree(BinarySearchTree):
         y.right = x
         x.parent = y
 
-    def rb_insert(self, z: TreeNode):
+    def insert(self, n: int):
+        rb_node = RBNode(value=n)
+        self.rb_insert(rb_node)
+
+    def rb_insert(self, z: RBNode):
         y = self.t_nil
         x = self.head
 

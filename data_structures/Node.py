@@ -34,10 +34,10 @@ class Node:
 
 class TreeNode(Node):
 
-    def __init__(self):
-        super().__init__()
-        self.left = None
-        self.right = None
+    def __init__(self, value=None, parent=None, child=None, set_pos=None, left=None, right=None):
+        super().__init__(value=value, parent=parent, child=child, set_pos=set_pos)
+        self.left = left
+        self.right = right
 
     def __iter__(self):
 
