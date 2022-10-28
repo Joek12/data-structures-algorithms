@@ -15,7 +15,7 @@ from Container import Container
 
 import hashlib
 
-class Hash_Table(Container):
+class HashTable(Container):
 
     def __init__(self, max=1000):
         self.max = max

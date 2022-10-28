@@ -3,8 +3,8 @@
         (i.e. implement linked list in python)
 """
 
-from data_structures.Node import Node
-from data_structures.Container import Container
+from Node import Node
+from Container import Container
 
 
 class List(Container):
